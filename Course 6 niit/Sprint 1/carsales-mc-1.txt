@@ -1,0 +1,225 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| carsales           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use carsales;
+Database changed
+mysql> create table customer(
+    -> customer_id int,
+    -> first_name varchar(20),
+    -> last_name varchar(20),
+    -> city varchar(20),
+    -> rating int,
+    -> primary key(customer_id),
+    -> sales_id int,
+    -> foreign key(sales_id) references salesperson(sales_id)
+    -> );
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| customer_id | int         | NO   | PRI | NULL    |       |
+| first_name  | varchar(20) | YES  |     | NULL    |       |
+| last_name   | varchar(20) | YES  |     | NULL    |       |
+| city        | varchar(20) | YES  |     | NULL    |       |
+| rating      | int         | YES  |     | NULL    |       |
+| sales_id    | int         | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into customer values(2001,"hoffman","anny","london",100,1001);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into customer values(2002,"giovanni","jenny","rome",200,1003);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into customer values(2003,"liu","william","san jose",100,1002);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into customer values(2004,"harry","grass","berlin",300,1002);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into customer values(2005,"clemens","john","london",200,1001);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into customer values(2006,"fanny","john","san jose",200,1005);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into customer values(2007,"jonathan","bob","rome",300,1004);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from customers;
+ERROR 1146 (42S02): Table 'carsales.customers' doesn't exist
+mysql> select * from customer;
++-------------+------------+-----------+----------+--------+----------+
+| customer_id | first_name | last_name | city     | rating | sales_id |
++-------------+------------+-----------+----------+--------+----------+
+|        2001 | hoffman    | anny      | london   |    100 |     1001 |
+|        2002 | giovanni   | jenny     | rome     |    200 |     1003 |
+|        2003 | liu        | william   | san jose |    100 |     1002 |
+|        2004 | harry      | grass     | berlin   |    300 |     1002 |
+|        2005 | clemens    | john      | london   |    200 |     1001 |
+|        2006 | fanny      | john      | san jose |    200 |     1005 |
+|        2007 | jonathan   | bob       | rome     |    300 |     1004 |
++-------------+------------+-----------+----------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> create table orders(
+    -> order_id int,
+    -> amount int,
+    -> order_date date,
+    -> primary key(order_id),
+    -> customer_id int,
+    -> foreign key(customer_id) references customer(customer_id)
+    -> );
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc orders;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| order_id    | int  | NO   | PRI | NULL    |       |
+| amount      | int  | YES  |     | NULL    |       |
+| order_date  | date | YES  |     | NULL    |       |
+| customer_id | int  | YES  | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into orders values(3001,123,'01-02-2020',2001);
+ERROR 1292 (22007): Incorrect date value: '01-02-2020' for column 'order_date' at row 1
+mysql> insert into orders values(3001,123,'2020-02-01',2001);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into orders values(3003,187,'2020-10-02',2007);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into orders values(3002,100,'2000-07-30',2003);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into orders values(3005,201,'2011-10-09',2007);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into orders values(3009,145,'2012-10-10',2002);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into orders values(3007,167,'2021-04-02',2002);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into orders values(3008,189,'1999-03-02',2006);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into orders values(3010,100,'2000-09-18',2004);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from orders;
++----------+--------+------------+-------------+
+| order_id | amount | order_date | customer_id |
++----------+--------+------------+-------------+
+|     3001 |    123 | 2020-02-01 |        2001 |
+|     3002 |    100 | 2000-07-30 |        2003 |
+|     3003 |    187 | 2020-10-02 |        2007 |
+|     3005 |    201 | 2011-10-09 |        2007 |
+|     3007 |    167 | 2021-04-02 |        2002 |
+|     3008 |    189 | 1999-03-02 |        2006 |
+|     3009 |    145 | 2012-10-10 |        2002 |
+|     3010 |    100 | 2000-09-18 |        2004 |
++----------+--------+------------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from orders where order_id=3008;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from orders;
++----------+--------+------------+-------------+
+| order_id | amount | order_date | customer_id |
++----------+--------+------------+-------------+
+|     3001 |    123 | 2020-02-01 |        2001 |
+|     3002 |    100 | 2000-07-30 |        2003 |
+|     3003 |    187 | 2020-10-02 |        2007 |
+|     3005 |    201 | 2011-10-09 |        2007 |
+|     3007 |    167 | 2021-04-02 |        2002 |
+|     3009 |    145 | 2012-10-10 |        2002 |
+|     3010 |    100 | 2000-09-18 |        2004 |
++----------+--------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> delete from salesperson where commision_rate=0;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from salesperson;
++----------+------------+-----------+----------------+
+| sales_id | first_name | city      | commision_rate |
++----------+------------+-----------+----------------+
+|     1001 | john       | london    |             12 |
+|     1002 | bob        | san jose  |             13 |
+|     1003 | harry      | new york  |             10 |
+|     1004 | judith     | london    |             11 |
+|     1005 | james      | london    |             26 |
+|     1007 | robin      | barcelona |             15 |
++----------+------------+-----------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> update orders set amount=200 where amount=100;
+Query OK, 2 rows affected (0.12 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from orders;
++----------+--------+------------+-------------+
+| order_id | amount | order_date | customer_id |
++----------+--------+------------+-------------+
+|     3001 |    123 | 2020-02-01 |        2001 |
+|     3002 |    200 | 2000-07-30 |        2003 |
+|     3003 |    187 | 2020-10-02 |        2007 |
+|     3005 |    201 | 2011-10-09 |        2007 |
+|     3007 |    167 | 2021-04-02 |        2002 |
+|     3009 |    145 | 2012-10-10 |        2002 |
+|     3010 |    200 | 2000-09-18 |        2004 |
++----------+--------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> update salesperson set commision_rate=28 where commision_rate=26;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from salesperson;
++----------+------------+-----------+----------------+
+| sales_id | first_name | city      | commision_rate |
++----------+------------+-----------+----------------+
+|     1001 | john       | london    |             12 |
+|     1002 | bob        | san jose  |             13 |
+|     1003 | harry      | new york  |             10 |
+|     1004 | judith     | london    |             11 |
+|     1005 | james      | london    |             28 |
+|     1007 | robin      | barcelona |             15 |
++----------+------------+-----------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> update customer set rating=150 where rating=100;
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from customer;
++-------------+------------+-----------+----------+--------+----------+
+| customer_id | first_name | last_name | city     | rating | sales_id |
++-------------+------------+-----------+----------+--------+----------+
+|        2001 | hoffman    | anny      | london   |    150 |     1001 |
+|        2002 | giovanni   | jenny     | rome     |    200 |     1003 |
+|        2003 | liu        | william   | san jose |    150 |     1002 |
+|        2004 | harry      | grass     | berlin   |    300 |     1002 |
+|        2005 | clemens    | john      | london   |    200 |     1001 |
+|        2006 | fanny      | john      | san jose |    200 |     1005 |
+|        2007 | jonathan   | bob       | rome     |    300 |     1004 |
++-------------+------------+-----------+----------+--------+----------+
+7 rows in set (0.00 sec)

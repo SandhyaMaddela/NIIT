@@ -1,0 +1,55 @@
+mysql> create database school;
+Query OK, 1 row affected (0.51 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| carsales           |
+| information_schema |
+| moviedb            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| school             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.14 sec)
+
+mysql> use school;
+Database changed
+
+mysql> create table student(
+    -> name varchar(20),
+    -> roll_no int,
+    -> grade char,
+    -> total_marks int);
+Query OK, 0 rows affected (0.75 sec)
+
+mysql> insert into student values("tom",102,'A',689);
+Query OK, 1 row affected (0.25 sec)
+
+mysql> insert into student values("harry",106,'B',609);
+Query OK, 1 row affected (0.25 sec)
+
+mysql> insert into student values("john",104,'C',678);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into student values("harsh",105,'B',578);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into student values("ram",105,'B',578);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++-------+---------+-------+-------------+
+| name  | roll_no | grade | total_marks |
++-------+---------+-------+-------------+
+| tom   |     102 | A     |         689 |
+| harry |     106 | B     |         609 |
+| john  |     104 | C     |         678 |
+| harsh |     105 | B     |         578 |
+| ram   |     105 | B     |         578 |
++-------+---------+-------+-------------+
+5 rows in set (0.00 sec)

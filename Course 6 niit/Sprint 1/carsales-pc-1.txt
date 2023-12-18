@@ -1,0 +1,65 @@
+mysql> create database carsales;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use carsales;
+Database changed
+mysql> create table salesperson(
+    -> sales_id int primary key,
+    -> first_name varchar(20),
+    -> city varchar(20),
+    -> commision_rate int);
+Query OK, 0 rows affected (0.40 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_carsales |
++--------------------+
+| salesperson        |
++--------------------+
+1 row in set (0.03 sec)
+
+mysql> desc salesperson;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| sales_id       | int         | NO   | PRI | NULL    |       |
+| first_name     | varchar(20) | YES  |     | NULL    |       |
+| city           | varchar(20) | YES  |     | NULL    |       |
+| commision_rate | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into salesperson values(1001,"john","london",12);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into salesperson values(1002,"bob","san jose",13);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into salesperson values(1004,"judith","london",11);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into salesperson values(1007,"robin","barcelona",15);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into salesperson values(1003,"harry","new york",10);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into salesperson values(1005,"james","london",26);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into salesperson values(1008,"charles","florida",0);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from salesperson;
++----------+------------+-----------+----------------+
+| sales_id | first_name | city      | commision_rate |
++----------+------------+-----------+----------------+
+|     1001 | john       | london    |             12 |
+|     1002 | bob        | san jose  |             13 |
+|     1003 | harry      | new york  |             10 |
+|     1004 | judith     | london    |             11 |
+|     1005 | james      | london    |             26 |
+|     1007 | robin      | barcelona |             15 |
+|     1008 | charles    | florida   |              0 |
++----------+------------+-----------+----------------+
+7 rows in set (0.00 sec)

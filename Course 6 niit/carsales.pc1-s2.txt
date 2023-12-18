@@ -1,0 +1,15 @@
+show databases;
+use carsales;
+show tables;
+select * from salesperson;
+select * from salesperson where first_name="robin" and city="barcelona";
+select city,commision_rate from salesperson where first_name="john";
+select * from salesperson where commision_rate>15;
+select * from salesperson where commision_rate between 10 and 20;
+select first_name ,city from salesperson where commision_rate>25;
+select first_name, city from salesperson where commision_rate=0;
+select * from salesperson where first_name like 'j%';
+select * from salesperson where city in ("london","new york","san jose");
+select avg(commision_rate) from salesperson;
+select first_name from salesperson where commision_rate in (10,11,12,13);
+select * from salesperson where commision_rate=(select max(commision_rate) from salesperson);
